@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TC4S - Trading Course Vault Access & Archive Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0A0E27;
+            --accent: #FF6B35;
+            --accent-secondary: #00D9FF;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B8C5D6;
+            --surface: #141B2E;
+            --surface-elevated: #1C2537;
+            --border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(0, 217, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 39, 0.8);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-secondary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 7vw, 92px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-weight: 300;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            color: var(--text-primary);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0, 217, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-secondary);
+            background: rgba(0, 217, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin: 80px 0;
+        }
+
+        .stat {
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .stat:nth-child(1) { animation-delay: 0.2s; }
+        .stat:nth-child(2) { animation-delay: 0.3s; }
+        .stat:nth-child(3) { animation-delay: 0.4s; }
+        .stat:nth-child(4) { animation-delay: 0.5s; }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            font-weight: 300;
+        }
+
+        /* Destinations Grid */
+        .destinations-section {
+            padding: 80px 0;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .destination-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .destination-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(255, 107, 53, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .destination-card:hover::before {
+            opacity: 1;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-secondary);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .destination-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 24px;
+            transition: transform 0.4s ease;
+        }
+
+        .destination-card:hover .destination-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .destination-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .destination-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .destination-link {
+            color: var(--accent-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease;
+        }
+
+        .destination-link:hover {
+            gap: 12px;
+        }
+
+        .destination-link::after {
+            content: '→';
+            font-size: 18px;
+        }
+
+        /* Vaults Section */
+        .vaults-section {
+            padding: 80px 0;
+            background: var(--surface);
+            position: relative;
+        }
+
+        .vaults-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .vault-card {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .vault-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .vault-card:hover::before {
+            opacity: 1;
+        }
+
+        .vault-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 70px rgba(255, 107, 53, 0.2);
+        }
+
+        .vault-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vault-description {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 16px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vault-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: gap 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vault-link:hover {
+            gap: 15px;
+        }
+
+        .vault-link::after {
+            content: '⟶';
+            font-size: 20px;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 20px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 80px 0;
+            background: var(--surface);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            color: var(--accent-secondary);
+            opacity: 0.2;
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--accent-secondary);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-email:hover::after {
+            transform: scaleX(1);
+        }
+
+        .contact-description {
+            margin-top: 24px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-secondary);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .hero {
+                padding: 80px 0 60px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .destinations-grid,
+            .vaults-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .contact-email {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">TC4S</div>
+                <ul class="nav-links">
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#vaults">Vaults</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>
+                        Your Gateway to<br>
+                        <span class="gradient-text">Trading Excellence</span>
+                    </h1>
+                    <p>
+                        TC4S unifies trading course and indicator vaults, self-improvement content,
+                        stores, downloads, archives, and key resources into one seamless hub.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="#destinations" class="btn btn-primary">Explore Everything</a>
+                        <a href="#vaults" class="btn btn-secondary">View Vaults</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-number">1M+</span>
+                    <span class="stat-label">Courses Available</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Indicators</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Vault Access</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Top Mentors</span>
+                </div>
+            </div>
+        </div>
+
+        <section id="destinations" class="destinations-section">
+            <div class="container">
+                <h2 class="section-title">Main Destinations</h2>
+                <p class="section-subtitle">Choose from all stores and key resources below</p>
+                
+                <div class="destinations-grid">
+                    <div class="destination-card">
+                        <div class="destination-icon">📦</div>
+                        <h3 class="destination-title">DLSUB</h3>
+                        <p class="destination-description">Download subscription with unlimited access to premium content.</p>
+                        <a href="/store/" class="destination-link">Visit Store</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🎓</div>
+                        <h3 class="destination-title">Buy a Course</h3>
+                        <p class="destination-description">Email us the course you want at admin@tc4s.net</p>
+                        <a href="/dvd/pages/Buy.html" class="destination-link">Get Started</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">💎</div>
+                        <h3 class="destination-title">Subscribe to DLSUB</h3>
+                        <p class="destination-description">Subscribe for comprehensive access to all resources.</p>
+                        <a href="/estore/pages/Subscribe-to-DLSUB.html" class="destination-link">Subscribe Now</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">📚</div>
+                        <h3 class="destination-title">DLSUB VAULT</h3>
+                        <p class="destination-description">Comprehensive trading courses vault.</p>
+                        <a href="/libr/categories/DLSUB-VAULT/?sort=newest" class="destination-link">Browse Courses</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">📊</div>
+                        <h3 class="destination-title">DLSUB INDICATORS</h3>
+                        <p class="destination-description">Professional trading indicators collection.</p>
+                        <a href="/shop/categories/DLSUB-INDICATORS/?sort=newest" class="destination-link">View Indicators</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🎯</div>
+                        <h3 class="destination-title">EVERYTHING ELSE</h3>
+                        <p class="destination-description">Premium learning programs and exclusive content.</p>
+                        <a href="/store/categories/DLSUB-EVERYTHING-ELSE/?sort=newest" class="destination-link">Explore More</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🤝</div>
+                        <h3 class="destination-title">GROUP BUY FOR SALE</h3>
+                        <p class="destination-description">Join group buys for discounted course access.</p>
+                        <a href="/dvd/categories/DLSUB-GROUP-BUY-FOR-SALE/?sort=newest" class="destination-link">View Deals</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">⭐</div>
+                        <h3 class="destination-title">EXCLUSIVE PREMIUM</h3>
+                        <p class="destination-description">Exclusive premium courses and materials.</p>
+                        <a href="/estore/categories/DLSUB-EXCLUSIVE-PREMIUM-COURSES/?sort=newest" class="destination-link">Unlock Access</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🔄</div>
+                        <h3 class="destination-title">SUBSCRIPTION SERVICES</h3>
+                        <p class="destination-description">Ongoing subscription-based services.</p>
+                        <a href="/libr/categories/DLSUB-SUBSCRIPTION-SERVICES/?sort=newest" class="destination-link">View Services</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">💰</div>
+                        <h3 class="destination-title">COST SHARING</h3>
+                        <p class="destination-description">Share costs with other traders.</p>
+                        <a href="/shop/pages/COST-SHARING.html" class="destination-link">Learn More</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🌌</div>
+                        <h3 class="destination-title">ECOMASTERS</h3>
+                        <p class="destination-description">Navigating the Economic Galaxy.</p>
+                        <a href="/store/pages/ECOMASTERS.html" class="destination-link">Enter Galaxy</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🔗</div>
+                        <h3 class="destination-title">DLSUB MIRRORS</h3>
+                        <p class="destination-description">Access mirror websites for redundancy.</p>
+                        <a href="/dvd/pages/DLSUB-MIRRORS.html" class="destination-link">View Mirrors</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🎁</div>
+                        <h3 class="destination-title">DLSUB REWARDS</h3>
+                        <p class="destination-description">Earn rewards through platform engagement.</p>
+                        <a href="/estore/pages/DLSUB-Rewards.html" class="destination-link">Get Rewards</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">🚀</div>
+                        <h3 class="destination-title">DROPPING SOON</h3>
+                        <p class="destination-description">Upcoming courses and releases.</p>
+                        <a href="/libr/pages/DLSUB-Dropping-Soon.html" class="destination-link">Preview</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">👥</div>
+                        <h3 class="destination-title">FEATURED PROVIDERS</h3>
+                        <p class="destination-description">Top mentors and course creators.</p>
+                        <a href="/shop/brands" class="destination-link">View Mentors</a>
+                    </div>
+
+                    <div class="destination-card">
+                        <div class="destination-icon">💬</div>
+                        <h3 class="destination-title">TELEGRAM CHANNEL</h3>
+                        <p class="destination-description">Join our community on Telegram.</p>
+                        <a href="https://t.me/dlsub_com/" class="destination-link">Join Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vaults" class="vaults-section">
+            <div class="container">
+                <h2 class="section-title">Vaults & Archives</h2>
+                <p class="section-subtitle">Access comprehensive collections of premium content</p>
+                
+                <div class="vaults-grid">
+                    <div class="vault-card">
+                        <h3 class="vault-title">TC4S VAULT</h3>
+                        <p class="vault-description">Trading Courses For Sale Vault. Access thousands of premium trading courses all in one centralized location.</p>
+                        <a href="http://everything.tc4s.net/TC4S%3A/" class="vault-link">Enter Vault</a>
+                    </div>
+
+                    <div class="vault-card">
+                        <h3 class="vault-title">PDC4S VAULT</h3>
+                        <p class="vault-description">Personal Development Courses For Sale Vault. Transform yourself with comprehensive self-improvement materials.</p>
+                        <a href="http://everything.tc4s.net/PDC4S%3A/" class="vault-link">Enter Vault</a>
+                    </div>
+
+                    <div class="vault-card">
+                        <h3 class="vault-title">COMPLETE ARCHIVE</h3>
+                        <p class="vault-description">Millions of courses in one place. The most comprehensive collection available anywhere.</p>
+                        <a href="/course-data-center/" class="vault-link">View Archive</a>
+                    </div>
+
+                    <div class="vault-card">
+                        <h3 class="vault-title">INDICATORS VAULTS</h3>
+                        <p class="vault-description">Thousands of indicators in one place. Professional-grade tools for serious traders.</p>
+                        <a href="http://everything.tc4s.net/TC4S%3A/Indicators/" class="vault-link">Browse Indicators</a>
+                    </div>
+
+                    <div class="vault-card">
+                        <h3 class="vault-title">THINKORSWIM VAULT</h3>
+                        <p class="vault-description">Thousands of ThinkOrSwim indicators in one place. Platform-specific tools optimized for TOS.</p>
+                        <a href="http://everything.tc4s.net/TC4S%3A/Indicators/ThinkOrSwim%20TOS/" class="vault-link">TOS Indicators</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="section-title">About TC4S</h2>
+                    <p class="about-text">
+                        TC4S is a unified hub that connects trading course and indicator vaults, skill-building education,
+                        downloads, archives, key resources, and multi-category stores across the DLSUB, TC4S, and PDC4S ecosystem.
+                        It brings together trading education, premium learning content, instructor materials, previews, and complete
+                        download libraries — all accessible from one central location. Our mission is to simplify discovery, improve
+                        navigation, and give traders and learners a clear gateway into millions of files, tens of thousands of courses,
+                        and dozens of interconnected vaults and archives.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title">What Traders Say</h2>
+                <p class="section-subtitle">Feedback from our community</p>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Great experience with TC4S easy to buy from and very affordable. Highly recommended!</p>
+                        <p class="testimonial-author">— Susan C.</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Buying from TC4S was fast, smooth, and incredibly affordable. Excellent service!</p>
+                        <p class="testimonial-author">— Sam R.</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Finally one homepage that shows me where everything lives.</p>
+                        <p class="testimonial-author">— John M.</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">TC4S made the whole process simple and affordable. Fantastic experience from start to finish.</p>
+                        <p class="testimonial-author">— Ahmed M.</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Excellent experience — quick, easy, and very affordable. TC4S delivers!</p>
+                        <p class="testimonial-author">— David L.</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Saves tons of time when navigating multiple sites.</p>
+                        <p class="testimonial-author">— Ron K.</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Super easy buying experience and great prices. TC4S exceeded my expectations!</p>
+                        <p class="testimonial-author">— Tammy C.</p>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Downloads and archive is gold.</p>
+                        <p class="testimonial-author">— Sean L.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Contact & Support</h2>
+                <a href="mailto:admin@tc4s.net" class="contact-email">admin@tc4s.net</a>
+                <p class="contact-description">
+                    Use this email for download subscriptions, course and indicator purchases, support, 
+                    downloads, and access to archives or vaults.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="https://www.dlsub.com">dlsub.com</a>
+                    <a href="http://www.dlsub.net">dlsub.net</a>
+                    <a href="http://everything.tc4s.net">tc4s.net</a>
+                    <a href="http://everything.pdc4s.com">pdc4s.com</a>
+                    <a href="http://archives.tc4s.net">archives</a>
+                    <a href="http://downloads.tc4s.net">downloads</a>
+                    <a href="http://vaults.tc4s.net">vaults</a>
+                </div>
+                <p class="copyright">© 2026 TC4S. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe destination cards
+        document.querySelectorAll('.destination-card, .vault-card, .testimonial-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
